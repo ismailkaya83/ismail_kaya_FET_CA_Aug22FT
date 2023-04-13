@@ -1,40 +1,40 @@
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define(
-    'User',
-    {
-      name: {
-        type: Sequelize.DataTypes.STRING,
+    const User = sequelize.define(
+        'User',
+        {
+            name: {
+                type: Sequelize.DataTypes.STRING,
 
-        allowNull: false,
-      },
+                allowNull: false,
+            },
 
-      email: {
-        type: Sequelize.DataTypes.STRING,
+            email: {
+                type: Sequelize.DataTypes.STRING,
 
-        allowNull: false,
-      },
+                allowNull: false,
+            },
 
-      encryptedPassword: {
-        type: Sequelize.DataTypes.BLOB,
+            encryptedPassword: {
+                type: Sequelize.DataTypes.BLOB,
 
-        allowNull: false,
-      },
+                allowNull: false,
+            },
 
-      salt: {
-        type: Sequelize.DataTypes.BLOB,
+            salt: {
+                type: Sequelize.DataTypes.BLOB,
 
-        allowNull: false,
-      },
-    },
-    {
-      timestamps: false,
-    }
-  );
+                allowNull: false,
+            },
+        },
+        {
+            timestamps: false,
+        }
+    );
 
-  User.associate = function (models) {
-    User.hasMany(models.Todo, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
-  };
+    User.associate = function (models) {
+        User.hasMany(models.Todo, {foreignKey: {allowNull: false}, onDelete: 'CASCADE'})
+    };
 
-  return User;
+    return User;
 };
 
