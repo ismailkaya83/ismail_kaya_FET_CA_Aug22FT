@@ -8,8 +8,8 @@ require('dotenv').config();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
-var todoRouter = require('./routes/todo');
-var categoryRouter = require('./routes/category');
+var todoRouter = require('./routes/todos');
+var categoryRouter = require('./routes/categories');
 
 var db = require('./models');
 db.sequelize.sync({ force: false });
