@@ -27,7 +27,7 @@ class ToDoService {
     async update(id, name, CategoryId, userId){
         const todo = await this.getOne(id, userId);
         if(!todo){
-            return null;
+            throw new Error('Todo not found');
         }
         return todo.update({
             name: name,
@@ -38,7 +38,7 @@ class ToDoService {
     async delete(id, userId){
         const todo = await this.getOne(id, userId);
         if(!todo){
-            return null;
+            throw new Error('Todo not found');
         }
         return todo.destroy();
     }

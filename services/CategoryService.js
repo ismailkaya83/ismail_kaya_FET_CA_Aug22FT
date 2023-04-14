@@ -26,7 +26,7 @@ class CategoryService {
     async update(id, name, userId){
         const category = await this.getOne(id, userId);
         if(!category){
-            return null;
+            throw new Error('Category not found');
         }
         return category.update({
             name: name
@@ -36,7 +36,7 @@ class CategoryService {
     async delete(id, userId){
         const category = await this.getOne(id, userId);
         if(!category){
-            return null;
+            throw new Error('Category not found');
         }
         return category.destroy();
     }

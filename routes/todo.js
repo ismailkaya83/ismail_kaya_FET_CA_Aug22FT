@@ -49,7 +49,11 @@ router.put('/:id', function (req, res, next) {
         const todo = await toDoService.update(req.params.id, name, CategoryId, req.userId);
         res.jsend.success({ todo });
     } catch (err) {
-        res.jsend.error({ message: 'Failed to update todo' });
+        if (err.message === 'Todo not found') {
+            res.status(404).jsend.fail({ message: 'Todo not found' });
+        } else {
+            res.jsend.error({ message: 'Failed to update todo' });
+        }
     }
 });
 
@@ -71,7 +75,11 @@ router.delete('/:id', function (req, res, next) {
         const todo = await toDoService.delete(req.params.id, req.userId);
         res.jsend.success({ todo });
     } catch (err) {
-        res.jsend.error({ message: 'Failed to delete todo' });
+        if (err.message === 'Todo not found') {
+            res.status(404).jsend.fail({ message: 'Todo not found' });
+        } else {
+            res.jsend.error({ message: 'Failed to update todo' });
+        }
     }
 });
 

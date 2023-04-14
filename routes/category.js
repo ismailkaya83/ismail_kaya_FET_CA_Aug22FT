@@ -49,7 +49,11 @@ router.put('/:id', function (req, res, next) {
         const category = await categoryService.update(req.params.id, name, req.userId);
         res.jsend.success({ category });
     } catch (err) {
-        res.jsend.error({ message: 'Failed to update category' });
+        if (err.message === 'Category not found') {
+            res.status(404).jsend.fail({ message: 'Category not found' });
+        } else {
+            res.jsend.error({ message: 'Failed to update category' });
+        }
     }
 });
 
@@ -71,7 +75,11 @@ router.delete('/:id', function (req, res, next) {
         const category = await categoryService.delete(req.params.id, req.userId);
         res.jsend.success({ category });
     } catch (err) {
-        res.jsend.error({ message: 'Failed to delete category' });
+        if (err.message === 'Category not found') {
+            res.status(404).jsend.fail({ message: 'Category not found' });
+        } else {
+            res.jsend.error({ message: 'Failed to update category' });
+        }
     }
 });
 
