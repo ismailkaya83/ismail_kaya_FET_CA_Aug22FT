@@ -23,7 +23,7 @@ router.get('/', function (req, res, next) {
     }
 }, async function (req, res, next) {
     try {
-        const categories = await categoryService.getAll(req.userId);
+        const categories = await categoryService.getAll();
         res.jsend.success({ categories });
     } catch (err) {
         res.jsend.error({ message: 'Failed to fetch categories' });
@@ -46,13 +46,13 @@ router.put('/:id', function (req, res, next) {
 }, async function (req, res, next) {
     try {
         const { name } = req.body;
-        const category = await categoryService.update(req.params.id, name, req.userId);
+        const category = await categoryService.update(req.params.id, name);
         res.jsend.success({ category });
     } catch (err) {
         if (err.message === 'Category not found') {
             res.status(404).jsend.fail({ message: 'Category not found' });
         } else {
-            res.jsend.error({ message: 'Failed to update category' });
+            res.status(400).jsend.error({ message: 'Failed to update category' });
         }
     }
 });
@@ -72,13 +72,13 @@ router.delete('/:id', function (req, res, next) {
     }
 }, async function (req, res, next) {
     try {
-        const category = await categoryService.delete(req.params.id, req.userId);
+        const category = await categoryService.delete(req.params.id);
         res.jsend.success({ category });
     } catch (err) {
         if (err.message === 'Category not found') {
             res.status(404).jsend.fail({ message: 'Category not found' });
         } else {
-            res.jsend.error({ message: 'Failed to update category' });
+            res.status(400).jsend.error({ message: 'Failed to delete category' });
         }
     }
 });
@@ -99,10 +99,10 @@ router.post('/', function (req, res, next) {
 }, async function (req, res, next) {
     try {
         const { name } = req.body;
-        const category = await categoryService.create(name, req.userId);
+        const category = await categoryService.create(name);
         res.jsend.success({ category });
     } catch (err) {
-        res.jsend.error({ message: 'Failed to create category' });
+        res.status(400).jsend.error({ message: 'Failed to create category' });
     }
 });
 

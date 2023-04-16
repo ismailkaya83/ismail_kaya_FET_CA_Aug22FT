@@ -1,31 +1,28 @@
 class CategoryService {
-    constructor(db){
+    constructor(db) {
         this.client = db.sequelize;
         this.Category = db.Category;
     }
 
-    async getAll(userId){
-        return this.Category.findAll({
-            where: {UserId: userId}
-        })
+    async getAll() {
+        return this.Category.findAll({})
     }
 
-    async getOne(id, userId){
+    async getOne(id) {
         return this.Category.findOne({
-            where: {id: id, UserId: userId}
+            where: {id: id}
         })
     }
 
-    async create(name, userId){
+    async create(name) {
         return this.Category.create({
             name: name,
-            UserId: userId
         })
     }
 
-    async update(id, name, userId){
-        const category = await this.getOne(id, userId);
-        if(!category){
+    async update(id, name) {
+        const category = await this.getOne(id);
+        if (!category) {
             throw new Error('Category not found');
         }
         return category.update({
@@ -33,9 +30,9 @@ class CategoryService {
         })
     }
 
-    async delete(id, userId){
-        const category = await this.getOne(id, userId);
-        if(!category){
+    async delete(id) {
+        const category = await this.getOne(id);
+        if (!category) {
             throw new Error('Category not found');
         }
         return category.destroy();

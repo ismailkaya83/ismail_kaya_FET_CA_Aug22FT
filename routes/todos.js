@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
         const todos = await toDoService.getAll(req.userId);
         res.jsend.success({ todos });
     } catch (err) {
-        res.jsend.error({ message: 'Failed to fetch todos' });
+        res.status(400).jsend.error({ message: 'Failed to fetch todos' });
     }
 });
 
@@ -52,7 +52,7 @@ router.put('/:id', function (req, res, next) {
         if (err.message === 'Todo not found') {
             res.status(404).jsend.fail({ message: 'Todo not found' });
         } else {
-            res.jsend.error({ message: 'Failed to update todo' });
+            res.status(400).jsend.error({ message: 'Failed to update todo' });
         }
     }
 });
@@ -78,7 +78,7 @@ router.delete('/:id', function (req, res, next) {
         if (err.message === 'Todo not found') {
             res.status(404).jsend.fail({ message: 'Todo not found' });
         } else {
-            res.jsend.error({ message: 'Failed to update todo' });
+            res.status(400).jsend.error({ message: 'Failed to delete todo' });
         }
     }
 });
@@ -103,7 +103,7 @@ router.post('/', function (req, res, next) {
         const todo = await toDoService.create(name, CategoryId, req.userId);
         res.jsend.success({ todo });
     } catch (err) {
-        res.jsend.error({ message: 'Failed to create todo', error: err });
+        res.status(400).jsend.error({ message: 'Failed to create todo', error: err });
     }
 });
 
